@@ -47,7 +47,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Never committed
+          Updated <time class='js-timeago' datetime='2021-09-08 19:52:49 -0500'>2021-09-08 19:52:49 -0500</time>
         
       </span>
     </div>
@@ -62,22 +62,22 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating c big">
-              C
+            <div class="rating a big">
+              A
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">80</span><small> lines of codes</small></div>
+              <div><span class="metric">52</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">0</span><small> churn</small></div>
+              <div><span class="metric">2</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">151.59</span><small> complexity</small></div>
-              <div><span class="metric">46</span><small> duplications</small></div>
+              <div><span class="metric">5.51</span><small> complexity</small></div>
+              <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                1
+                0
                 smell
               </a>
             </li>
@@ -100,81 +100,53 @@
     <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
 require &#39;rspec&#39;
+require &#39;spec_helper&#39;
 require &#39;./lib/bowling_game&#39;
+require &#39;./lib/frame&#39;
 
 describe BowlingGame do
   before :all do
     @game = BowlingGame.new
+    # @game.play
+    # @frames = @game.frames
+    # @game_score = 0
   end
+  # it &#39;Game play&#39; do
+  #   score_prev = 0
+  #   bonus_prev = &#39;&#39;
+  #   prev_frame = nil
+  #   prev_frame_init = false
 
-  context &#39;Normal Shot&#39; do
-    it &#39;score is normal  when shot number 1 and shot 2 &lt; 10 and &gt;= 0&#39; do
-      @game.normal
-      score = @game.score
-      expect(score).to be_between(0, 9)
-    end
-    it &#39;has 20 shots by the end of the frame number 10&#39; do
-      total_shots = @game.shots
-      expect(total_shots).to eq(20)
-    end
-    it &#39;score is 5 when shot 1 is 3 and shot 2 is 2&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="bowling_game_spec.html#L21" class="js-smell-location">0</a>                  <a href="bowling_game_spec.html#L39" class="js-smell-location">1</a>                  </div>  </li></ol>
-      shot_1 = @game.shot(3)
-      shot_2 = @game.shot(2)
-      score = shot_1.score + shot_2.score
-      expect(score).to eq(5)
-    end
-  end
-  context &#39;Spare Shot&#39; do
-    it &#39;score is 10 for a spare&#39; do
-      skip
-      @game.spare
-      score = @game.score
-      expect(score).to eq(10)
-    end
-    it &#39;has 21 shots by the end of the frame number 10&#39; do
-      total_shots = @game.shots
-      expect(total_shots).to eq(21)
-    end
-    it &#39;score is 10 when shot 1 is 3 and shot 2 is 7&#39; do<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flay/" target="_blank"><b>DuplicateCode</b></a>        </span>      </div>      <span>Similar code found in 2 nodes</span>              <span>Locations:</span>                  <a href="bowling_game_spec.html#L21" class="js-smell-location">0</a>                  <a href="bowling_game_spec.html#L39" class="js-smell-location">1</a>                  </div>  </li></ol>
-      shot_1 = @game.shot(3)
-      shot_2 = @game.shot(7)
-      score = shot_1.score + shot_2.score
-      expect(score).to eq(10)
-    end
-    it &#39;bonus shot is 2&#39; do
-      shot_1 = @game.shot(3)
-      shot_2 = @game.shot(7)
-      shot_3 = @game.shot(2)
-      bonus = shot_3.score
-      expect(bonus).to eq(2)
-    end
-    it &#39;score is 14 for shot 1 is 6, shot 2 is 4 and shot 3 is 4&#39; do
-      shot_1 = @game.shot(6)
-      shot_2 = @game.shot(4)
-      shot_3 = @game.shot(4)
-      total = shot_1.score + shot_2.score
-      bonus = shot_3.score
-      score = total + bonus
-      expect(score).to eq(14)
-    end
-  end
-  context &#39;Strike Shot&#39; do
-    it &#39;score is 10 for a strike - knocking down all ten pins&#39; do
-      @game.strike
-      score = @game.score
-      expect(score).to eq(10)
-    end
-    it &#39;has 22 shots by the end of the frame number 10&#39; do
-      total_shots = @game.shots
-      expect(total_shots).to eq(22)
-    end
-    it &#39;bonus shot is 6&#39; do
-      shot_1 = @game.shot(10)
-      shot_2 = @game.shot(4)
-      shot_3 = @game.shot(2)
-      bonus = shot_2.score + shot_3.score
-      expect(bonus).to eq(6)
-    end
+  #   @frames.each do |frame|
+
+  #     if prev_frame_init == false
+  #       prev_frame = frame
+  #       prev_frame_init = true
+  #     end
+
+  #     frame.turn
+  #     if score_prev != 0
+  #         if bonus_prev == &#39;strike&#39;
+  #           @game_score = @game_score + frame.score
+  #         elsif bonus_prev == &#39;spare&#39;
+  #           @game_score = @game_score + frame.shot_one_score
+  #         end
+  #       score_prev = 0
+  #       bonus_prev = &#39;&#39;
+  #     end
+  #     @game_score = @game_score + frame.score
+  #     puts &quot;Frame #:#{frame.position} , Style: #{frame.bonus}, Frame Score: #{frame.score}, Score Acumulado: #{@game_score}, Prev Score: #{prev_frame.score}, S1:#{frame.shot_one_score}, S2:#{frame.shot_two_score}, S3:#{frame.shot_three_score}&quot;
+  #     prev_frame = frame
+
+  #     if frame.bonus == &#39;strike&#39; || &#39;spare&#39;
+  #       score_prev = frame.score
+  #       bonus_prev = frame.bonus
+  #     end
+  #   end
+
+  # end
+  it &#39;metodo play&#39; do
+    @game.play
   end
 end
 </code>
